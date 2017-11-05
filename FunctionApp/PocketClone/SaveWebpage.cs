@@ -6,6 +6,10 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Azure.WebJobs.Host;
 using Microsoft.Extensions.Logging;
+using PocketClone.Models;
+using System.ComponentModel.DataAnnotations;
+using System.Collections.Generic;
+using PocketClone.Services;
 
 namespace PocketClone
 {
@@ -16,22 +20,28 @@ namespace PocketClone
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "pages")] HttpRequestMessage req, 
             ILogger log)
         {
-            //log.In("C# HTTP trigger function processed a request.");
 
-            // parse query parameter
-            string name = req.GetQueryNameValuePairs()
-                .FirstOrDefault(q => string.Compare(q.Key, "name", true) == 0)
-                .Value;
+            req.CreateResponse(HttpStatusCode.OK);
 
-            // Get request body
-            dynamic data = await req.Content.ReadAsAsync<object>();
+            var data = await req.Content.ReadAsAsync<SavedPage>();
 
-            // Set name to query string or body data
-            name = name ?? data?.name;
+            if (data == null)
+                return req.CreateResponse(HttpStatusCode.BadRequest, "Pass JSON body for the page to be saved");
 
-            return name == null
-                ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a name on the query string or in the request body")
-                : req.CreateResponse(HttpStatusCode.OK, "Hello " + name);
+            List<ValidationResult> results;
+            var isValid = ValidationService.TryValidate(data, out results);
+            
+            if (!isValid)
+                return req.CreateResponse(HttpStatusCode.BadRequest, results);
+            
+            return req.CreateResponse(HttpStatusCode.OK);
+
+            //// Set name to query string or body data
+            //name = name ?? data?.name;
+
+            //return name == null
+            //    ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a name on the query string or in the request body")
+            //    : req.CreateResponse(HttpStatusCode.OK, "Hello " + name);
         }
     }
 }

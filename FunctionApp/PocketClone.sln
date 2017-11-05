@@ -5,6 +5,10 @@ VisualStudioVersion = 15.0.27004.2006
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PocketClone", "PocketClone\PocketClone.csproj", "{DE90ADC1-6BE0-4A8A-8D06-4F4B1731750B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PocketClone.Tests", "PocketClone.Tests\PocketClone.Tests.csproj", "{7AD0B045-FF44-44FC-A7D2-298014E77E49}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utilities", "Utilities\Utilities.csproj", "{C4C2066D-3276-4B10-B369-32364E7D57E7}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{DE90ADC1-6BE0-4A8A-8D06-4F4B1731750B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DE90ADC1-6BE0-4A8A-8D06-4F4B1731750B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DE90ADC1-6BE0-4A8A-8D06-4F4B1731750B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7AD0B045-FF44-44FC-A7D2-298014E77E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7AD0B045-FF44-44FC-A7D2-298014E77E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7AD0B045-FF44-44FC-A7D2-298014E77E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7AD0B045-FF44-44FC-A7D2-298014E77E49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C4C2066D-3276-4B10-B369-32364E7D57E7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C4C2066D-3276-4B10-B369-32364E7D57E7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C4C2066D-3276-4B10-B369-32364E7D57E7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C4C2066D-3276-4B10-B369-32364E7D57E7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
