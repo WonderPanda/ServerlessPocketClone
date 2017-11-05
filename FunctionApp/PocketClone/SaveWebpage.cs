@@ -1,4 +1,5 @@
 using System.Linq;
+using Autofac;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -10,6 +11,7 @@ using PocketClone.Models;
 using System.ComponentModel.DataAnnotations;
 using System.Collections.Generic;
 using PocketClone.Services;
+using PocketClone.Config;
 
 namespace PocketClone
 {
@@ -20,28 +22,21 @@ namespace PocketClone
             [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "pages")] HttpRequestMessage req, 
             ILogger log)
         {
+            var page = await req.Content.ReadAsAsync<SavedPage>();
 
-            req.CreateResponse(HttpStatusCode.OK);
-
-            var data = await req.Content.ReadAsAsync<SavedPage>();
-
-            if (data == null)
+            if (page == null)
                 return req.CreateResponse(HttpStatusCode.BadRequest, "Pass JSON body for the page to be saved");
 
             List<ValidationResult> results;
-            var isValid = ValidationService.TryValidate(data, out results);
+            var isValid = ValidationService.TryValidate(page, out results);
             
             if (!isValid)
                 return req.CreateResponse(HttpStatusCode.BadRequest, results);
-            
+
+            var searchService = Locator.Container.Resolve<ISearchService>();
+            await searchService.IndexItem(page);
+
             return req.CreateResponse(HttpStatusCode.OK);
-
-            //// Set name to query string or body data
-            //name = name ?? data?.name;
-
-            //return name == null
-            //    ? req.CreateResponse(HttpStatusCode.BadRequest, "Please pass a name on the query string or in the request body")
-            //    : req.CreateResponse(HttpStatusCode.OK, "Hello " + name);
         }
     }
 }
