@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PocketClone.Services
 {
-    public class AlgoliaSearchService
+    public class AlgoliaSearchService : ISearchService
     {
         private readonly string _appId;
         private readonly string _authKey;
@@ -24,6 +24,11 @@ namespace PocketClone.Services
             
             _client = new AlgoliaClient(appId, authKey);
             _index = _client.InitIndex(indexName);
+        }
+
+        public Task IndexItem(object item)
+        {
+            return _index.AddObjectAsync(item);
         }
     }
 }
